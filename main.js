@@ -77,7 +77,7 @@ var productor = {
                 alert('You need ' + ((new Decimal(this.name.length - 5).times(new Decimal(35 + 10 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index])).toString())) + ' knowledge points for this!');
                 return(0);
             } else {
-                    if (new Decimal(game.money.toString()).gte(this.price[index].toString())) {
+                    if (new Decimal(game.money).gte(this.price[index])) {
                         this.until10[index] -= 1;
                         game.addMoney(new Decimal(this.price[index].toString()).times('-1').toString());
                         this.amount[index] = new Decimal(this.amount[index].toString()).plus('1').toString();
