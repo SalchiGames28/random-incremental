@@ -79,7 +79,7 @@ var productor = {
             } else {
                     if (new Decimal(game.money).gte(this.price[index])) {
                         this.until10[index] -= 1;
-                        game.addMoney(new Decimal(this.price[index].toString()).times('-1').toString());
+                        game.addMoney(new Decimal(this.price[index]).times('-1').toString());
                         this.amount[index] = new Decimal(this.amount[index].toString()).plus('1').toString();
                         game.tempMultiplier += game.tempMultiplierIncrease / Math.pow(game.tempMultiplier, 1.5);
                         if (this.until10[index] <= 0) {
@@ -641,7 +641,7 @@ let timer = 0;
 setInterval(function() {
     for (i = 0; i < autobuyers.price.length; i++) {
         if (autobuyers.boughtCount[i] > 0) {
-            autobuyers.timer[i]++;
+            autobuyers.timer[i] += autobuyers.price.length;
             if (autobuyers.timer[i] >= autobuyers.speed[i]) {
                 autobuyers.timer[i] = 0;
                 if (autobuyers.bulkBuy[i] == -1) {
