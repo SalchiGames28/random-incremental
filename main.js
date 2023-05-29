@@ -647,7 +647,7 @@ setInterval(function() {
                 if (autobuyers.bulkBuy[i] == -1) {
                     var success = 1;
                     for (tries = 0; success = 1; tries++) {
-                        success = productor.purchase(i, 1)
+                        success = productor.purchase(i, 10)
                     }
                 } else productor.purchase(i, autobuyers.bulkBuy[i])
             }
