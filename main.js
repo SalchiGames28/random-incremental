@@ -315,6 +315,13 @@ var autobuyers = {
         1,
         1
     ],
+    timer: [
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
 
     purchase: function(index) {
         if (new Decimal(game.money.toString()).gte(new Decimal(this.price[index].toString()))) {
@@ -632,10 +639,11 @@ window.onload = function() {
 let timer = 0;
 
 setInterval(function() {
-    timer++
     for (i = 0; i < autobuyers.price.length; i++) {
         if (autobuyers.boughtCount[i] > 0) {
-            if (timer % autobuyers.speed[i] == 0) {
+            autobuyers.timer[i]++;
+            if (autobuyers.timer[i] >= autobuyers.speed[i]) {
+                autobuyers.timer[i] = 0;
                 if (autobuyers.bulkBuy[i] == -1) {
                     var success = 1;
                     for (tries = 0; success = 1; tries++) {
