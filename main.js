@@ -18,15 +18,6 @@ var game = {
     },
 };
 
-var breakInfinity = {
-    number: function(number) {
-        var n = BigInt(number);
-        var sn = n.toString
-        var m = sn.substring(0, sn.indexOf("e"))
-        return(m)
-    }
-}
-
 var productor = {
     name: [
         "Workers",
