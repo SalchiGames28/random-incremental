@@ -80,14 +80,14 @@ var productor = {
                     if (new Decimal(game.money).gte(this.price[index])) {
                         this.until10[index] -= 1;
                         game.addMoney(new Decimal(this.price[index]).times('-1').toString());
-                        this.amount[index] = new Decimal(this.amount[index].toString()).plus('1').toString();
+                        this.amount[index] = new Decimal(this.amount[index]).plus('1').toString();
                         game.tempMultiplier += game.tempMultiplierIncrease / Math.pow(game.tempMultiplier, 1.5);
                         if (this.until10[index] <= 0) {
                             game.knowledgePoints += 1;
                             game.totalKP += 1;
-                            this.price[index] = new Decimal(this.price[index].toString()).times(this.priceMultiplier[index].toString()).toString();
+                            this.price[index] = new Decimal(this.price[index]).times(this.priceMultiplier[index].toString()).toString();
                             if (this.produces[index] !== -2) {
-                            productorMultiplier.multiplier[index] = new Decimal(productorMultiplier.multiplier[index].toString()).times(productorMultiplier.multiplierIncrement[index].toString()).toString();
+                            productorMultiplier.multiplier[index] = new Decimal(productorMultiplier.multiplier[index]).times(productorMultiplier.multiplierIncrement[index].toString()).toString();
                             this.until10[index] = 10;
                             }
                             else {
