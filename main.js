@@ -73,8 +73,8 @@ var productor = {
 
     purchase: function(index, times) {
         for (let t = 0; t < times; t++) {
-            if (new Decimal(this.name.length - 5).times(new Decimal(40 + 15 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index])).gt(new Decimal(game.knowledgePoints)) && this.produces[index] == -2) {
-                alert('You need ' + ((new Decimal(this.name.length - 5).times(new Decimal(40 + 15 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index])).toString())) + ' knowledge points for this!');
+            if (new Decimal(this.name.length - 5).times(new Decimal(35 + 10 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index])).gt(new Decimal(game.knowledgePoints)) && this.produces[index] == -2) {
+                alert('You need ' + ((new Decimal(this.name.length - 5).times(new Decimal(35 + 10 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index])).toString())) + ' knowledge points for this!');
                 return(0);
             } else {
                     if (new Decimal(game.money.toString()).gte(this.price[index].toString())) {
@@ -95,7 +95,7 @@ var productor = {
                             }
                         };
                         display.updateShop();
-                        return(1)
+                        if (t == times - 1) return(1)
                         } else return(0)
                     }
         }
@@ -373,16 +373,16 @@ var display = {
         for (i = 0; i < productor.name.length; i++) {
             if (new Decimal(game.money.toString()).gte(productor.price[i].toString())) {
                 if (productor.produces[i] == -2) {
-                    if (new Decimal(game.knowledgePoints).gte(new Decimal(productor.name.length - 5).times(new Decimal(40 + 15 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString())) {
+                    if (new Decimal(game.knowledgePoints).gte(new Decimal(productor.name.length - 5).times(new Decimal(35 + 10 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString())) {
                         buyables.push(1)
                     } else buyables.push(0)
                 } else buyables.push(1)
             } else buyables.push(0);
             if (buyables[buyables.length - 1] == 1) {
-                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs '+shortInput(new Decimal(productor.price[i]).toString(), 3)+' coins<span id="kp'+i+'"> and '+shortInput((productor.name.length - 5) * (40 + 15 * (productor.name.length - 5)) + 10 + productor.amount[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
+                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs '+shortInput(new Decimal(productor.price[i]).toString(), 3)+' coins<span id="kp'+i+'"> and '+shortInput((productor.name.length - 5) * (35 + 10 * (productor.name.length - 5)) + 10 + productor.amount[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
             }
             else {
-                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs <span>'+shortInput(productor.price[i], 3)+' coins<span id="kp'+i+'"> and '+(productor.name.length - 5) * (40 + 15 * (productor.name.length - 5)) + 10 + productor.amount[i]+' knowledge points</span></span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 3)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
+                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs <span>'+shortInput(productor.price[i], 3)+' coins<span id="kp'+i+'"> and '+(productor.name.length - 5) * (35 + 10 * (productor.name.length - 5)) + 10 + productor.amount[i]+' knowledge points</span></span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 3)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
             }
         }
         updateValues()
@@ -419,6 +419,12 @@ var display = {
             if (pages.appearsIn[i] == "pages.page" || pages.appearsIn[i] == 1) {
                 document.getElementById("pageButtonContainer").innerHTML += '<p onclick="changePage(\'' + pages.index[i] + '\')" class="pagebutton unselectable">'+pages.name[i]+'</p>'
             }
+        }
+    },
+    updateAutobuyers: function() {
+        document.getElementById("autobuyerButtonContainer").innerHTML = ""
+        for (i = 0; i < autobuyers.speed.length; i++) {
+            document.getElementById("autobuyerButtonContainer").innerHTML += ''
         }
     }
 }
@@ -654,7 +660,7 @@ function updateValues() {
         for (i = 0; i < productor.name.length; i++) {
             productor.amount[i] = new Decimal(productor.amount[i]).plus(new Decimal(productor.getProductionPerSecond(i)).times('0.01'));
             document.getElementById(i).innerHTML = shortInput(Decimal.floor(productor.amount[i]).toString(), 2) + ' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')';
-            if (i === productor.name.length - 1) document.getElementById('kp' + i).innerHTML = ' and ' + shortInput(new Decimal(productor.name.length - 5).times(new Decimal(40 + 15 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString(), 2) + ' knowledge points'
+            if (i === productor.name.length - 1) document.getElementById('kp' + i).innerHTML = ' and ' + shortInput(new Decimal(productor.name.length - 5).times(new Decimal(35 + 10 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString(), 2) + ' knowledge points'
             else document.getElementById('kp' + i).innerHTML = ''
         }
     }
@@ -674,7 +680,7 @@ setInterval(function() {
     for (i = 0; i < productor.name.length; i++) {
         if (new Decimal(game.money.toString()).gte(productor.price[i].toString())) {
             if (productor.produces[i] == -2) {
-                if (new Decimal(game.knowledgePoints).gte(new Decimal(productor.name.length - 5).times(new Decimal(40 + 15 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString())) {
+                if (new Decimal(game.knowledgePoints).gte(new Decimal(productor.name.length - 5).times(new Decimal(35 + 10 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString())) {
                     nextBuyables.push(1)
                 } else nextBuyables.push(0)
             } else nextBuyables.push(1)
