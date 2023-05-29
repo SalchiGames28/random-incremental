@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.11',
+    version: '0.0.12',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -642,7 +642,7 @@ setInterval(function() {
                     do {
                         tries++;
                         success = productor.purchase(i, 10);
-                    } while (success == 1 || tries < 2501);
+                    } while (success == 1 && tries < 26);
                 } else productor.purchase(i, autobuyers.bulkBuy[i]);
             }
         }   
