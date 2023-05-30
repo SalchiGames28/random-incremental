@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.172',
+    version: '0.0.173',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -384,16 +384,7 @@ var display = {
     },
     updateShop: function(index) {
         if (index == "all") {
-            buyables = [];
-                for (i = 0; i < productor.name.length; i++) {
-                    if (new Decimal(game.money).gte(productor.price[i])) {
-                        if (productor.produces[i] == -2) {
-                            if (new Decimal(game.knowledgePoints).gte(productor.kp[i])) {
-                                buyables.push(1)
-                            } else buyables.push(0)
-                        } else buyables.push(1)
-                    } else buyables.push(0);
-                }
+            buyables = nextBuyables;
             document.getElementById("shopContainer").innerHTML = "";
             for (i = 0; i < productor.name.length; i++) {
                 if (buyables[i] == 1) {
@@ -404,13 +395,7 @@ var display = {
                 }
             }
         } else if (index >= 0) {
-            if (new Decimal(game.money).gte(productor.price[index])) {
-                if (productor.produces[index] == -2) {
-                    if (new Decimal(game.knowledgePoints).gte(productor.kp[index])) {
-                        buyables[index] = 1
-                    } else buyables[index] = 0
-                } else buyables[index] = 1
-            } else buyables[index] = 0
+            buyables[index] = nextBuyables[index]
             if (buyables[index] == 1) {
                 var shopContainer = document.getElementById("shopContainer");
                 var tempElement = document.createElement('div');
@@ -737,9 +722,7 @@ setInterval(function() {
                 } else nextBuyables.push(0)
             } else nextBuyables.push(1)
         } else nextBuyables.push(0)
-
-    } for (i = 0; i < productor.name.length; i++) {
-        if (nextBuyables[i] !== buyables[i]) display.updateShop(i)        
+        if (nextBuyables[i] !== buyables[i]) display.updateShop(i)
     }
     //para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
