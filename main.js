@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1752',
+    version: '0.0.1753',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -77,7 +77,7 @@ var productor = {
 
     purchase: function(index, times) {
         for (let t = 0; t < times; t++) {
-            if (new Decimal(this.kp[index]).gt(new Decimal(game.knowledgePoints)) && this.produces[index] == -2) {
+            if ((this.name.length >= this.maxWorkers + 5 || new Decimal(this.kp[index]).gt(new Decimal(game.knowledgePoints))) && this.produces[index] == -2) {
                 if (new Decimal(game.money).gte(this.price[index]) && this.name.length < this.maxWorkers + 5) alert('You need ' + this.kp[index] + ' knowledge points for this!');
                 return(0);
             } else {
