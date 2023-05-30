@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.177',
+    version: '0.0.1771',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -295,7 +295,7 @@ var upgrades = {
                             price[i] = this.price[index]
                         }
                     }
-                    newSave(10, 10, 1, kP, tKP, 0.3, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], [10, 3], [3, 0], [0, 0])
+                    newSave(10, 10, 1, kP, tKP, 0.3, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, amount)
                     loadGame();
                     this.amount[index]++;
                     var sum = Decimal.multiply(this.producesAmount[index].toString(), this.amount[index].toString())
