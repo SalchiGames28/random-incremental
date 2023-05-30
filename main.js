@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1424',
+    version: '0.0.15',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -601,7 +601,7 @@ function loadGame () {
 
 function shortInput(input, maxPrecision) {
     var log = Decimal.log10(input.toString())
-    if (log >= 6) {
+    if (log >= 5.9) {
         const exponent = Math.floor(log);
         const rounded = new Decimal(new Decimal(input.toString()).dividedBy(Decimal.pow(10, exponent))).toFixed(maxPrecision)
         return(rounded.toString() + 'e' + exponent);
