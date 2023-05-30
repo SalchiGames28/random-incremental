@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.142',
+    version: '0.0.1421',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -636,7 +636,7 @@ function onLoad() {
         display.updateUpgrades()
     };
     display.updatePageButtons();
-    document.getElementById("version").innerHTML = 'Version: '+game.version+' by l1mb0'
+    document.getElementById("versionContainer").innerHTML = game.version
 };
 
 function changePage(page) {
