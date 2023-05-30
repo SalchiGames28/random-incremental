@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.174',
+    version: '0.0.1741',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -419,7 +419,7 @@ var display = {
         for (i = 0; i < upgrades.name.length; i++) {
             if (upgrades.priceType[i] == "productor") {
                 if (availableUpgrades[i] == 2) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
-                else document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upnotbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
+                else if (availableUpgrades[i] == 1) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upnotbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
             } else if (upgrades.priceType[i] == "upgrade") {
                 if (availableUpgrades[i] == 2) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
                 else document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upnotbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
@@ -712,11 +712,10 @@ setInterval(function() {
     //para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
         if (upgrades.priceType[i] == "productor") {
-            if (productor.name.length > upgrades.priceIndex[i]) {
-                if (productor.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) nextAU.push(2)
-                else nextAU.push(1)
-            }
-            else nextAU.push(0);
+                if (productor.name.length > upgrades.priceIndex[i]) {
+                    if (productor.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) nextAU.push(2)
+                    else nextAU.push(1)
+                } else nextAU.push(0)
             } else if (upgrades.priceType[i] == "upgrade") {
                 if (upgrades.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) nextAU.push(2)
                 else nextAU.push(0)
