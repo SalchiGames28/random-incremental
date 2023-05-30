@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1776',
+    version: '0.0.178',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -269,8 +269,8 @@ var upgrades = {
                         if (this.producesType[index] === "multiplier") game.tempMultiplier = Decimal.multiply("0.3", multiplier.toString()).toString()
                         else if (this.producesType[index] === "sum") game.tempMultiplier = Decimal.sum("0.3", sum.toString()).toString()
                     } else if (this.produces[index] === 3) {
-                        if (this.producesType[index] === "multiplier") game.maxWorkers *= multiplier
-                        else if (this.producesType[index] === "sum") game.maxWorkers += sum
+                        if (this.producesType[index] === "multiplier") productor.maxWorkers *= multiplier
+                        else if (this.producesType[index] === "sum") productor.maxWorkers = Decimal.add(productor.maxWorkers, sum.toString()).toString()
                     }
                     if (this.priceIncrementType[index] === "#") this.priceIndex[index]++
                     else if (this.priceIncrementType[index] === "amount") this.price[index] += this.priceIncrement[index];
@@ -319,7 +319,7 @@ var upgrades = {
                         else if (this.producesType[index] === "sum") game.tempMultiplierIncrease = Decimal.add("0.3", sum.toString()).toString()
                     } else if (this.produces[index] === 3) {
                         if (this.producesType[index] === "multiplier") productor.maxWorkers *= multiplier
-                        else if (this.producesType[index] === "sum") productor.maxWorkers += sum
+                        else if (this.producesType[index] === "sum") productor.maxWorkers = Decimal.add(productor.maxWorkers, sum.toString()).toString()
                     }
                     if (this.priceIncrementType[index] === "#") this.priceIndex[index]++
                     else if (this.priceIncrementType[index] === "amount") this.price[index] += this.priceIncrement[index];
