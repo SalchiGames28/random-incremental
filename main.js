@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.162',
+    version: '0.0.163',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -136,7 +136,7 @@ var productor = {
         this.amount.push(0);
         this.produces.push(-2);
         this.until10.push(10);
-        this.kp.push(new Decimal(new Decimal(this.name.length - 5).times(new Decimal(35 + 10 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index]))).toString())
+        this.kp.push(new Decimal(new Decimal(this.name.length - 5).times(new Decimal(35 + 10 * (this.name.length - 5))).plus(new Decimal('10'))).toString())
         productorMultiplier.multiplier.push(1);
         productorMultiplier.multiplierIncrement.push(1);
 
