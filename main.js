@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1762',
+    version: '0.0.177',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -69,7 +69,7 @@ var productor = {
         10,
         10
     ],
-    maxWorkers: 10,
+    maxWorkers: 5,
 
     calculateKP: function(index) {
         return(new Decimal(new Decimal(this.name.length - 5).times(new Decimal(20 + 10 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index]))).toString())
@@ -167,47 +167,63 @@ var productorMultiplier = {
 var upgrades = {
     name: [
         "Knowledge Prestige",
+        "Create more workers",
         "Better Temporal Multipliers"
     ],
     description: [
         "Start over again but keep your knowledge points and give a x2 multiplier to all productors",
+        "Start over again but keep your knowledge points and be able to create one extra worker",
         "Start over again keeping your knowledge points but the temporal multipliers last longer"
     ],
     price: [
         10,
+        4,
         3
     ],
     priceIncrement: [
+        1,
         1,
         1
     ],
     priceType: [
         "productor",
+        "upgrade",
         "upgrade"
     ],
     priceIndex: [
         3,
+        0,
         0
     ],
     priceIncrementType: [
         "#",
+        "amount",
         "amount"
     ],
     amount: [
+        0,
         0,
         0
     ],
     produces: [
         1,
+        3,
         2
     ],
     producesAmount: [
         2,
+        1,
         0.25
     ],
     producesType: [
         "multiplier",
+        "sum",
         "sum"
+    ],
+    keepUpgrades: [
+        [-2, 1, 2],
+        [-1, -2, 2],
+        [-1, 1, -2]
     ],
 
     purchase: function(index, times) {
@@ -216,13 +232,23 @@ var upgrades = {
                 if (confirm("Are you sure you want to restart?")) {
                     var kP = game.knowledgePoints;
                     var tKP = game.totalKP;
-                    var am = this.amount[index];
-                    var priceIndex = this.priceIndex[index];
-                    var tempMultiplierIncrease = game.tempMultiplierIncrease
-                    newSave(10, game.totalMoney, 1, kP, tKP, tempMultiplierIncrease, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], [10, this.price[1]], [3, this.priceIndex[1]], [0, this.amount[1]])
+                    var am = [0, 0, 0];
+                    var priceIndex = [3, 0, 0];
+                    var price = [10, 4, 3];
+                    var tempMultiplierIncrease = game.tempMultiplierIncrease;
+                    for (i = 0; i < this.keepUpgrades[i].length; i++) {
+                        if (this.keepUpgrades[index][i] !== -1) {
+                            am[i] = this.amount[this.keepUpgrades[index][i]];
+                            priceIndex[i] = this.priceIndex[this.keepUpgrades[index][i]];
+                            price[i] = this.price[this.keepUpgrades[index][i]]
+                        } else if (this.keepUpgrades[index][i] == -2) {
+                            am[i] = this.amount[index];
+                            priceIndex[i] = this.priceIndex[index];
+                            price[i] = this.price[index]
+                        }
+                    }
+                    newSave(10, game.totalMoney, 1, kP, tKP, tempMultiplierIncrease, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, amount)
                     loadGame();
-                    this.amount[index] = am;
-                    this.priceIndex[index] = priceIndex;
                     this.amount[index]++;
                     var sum = Decimal.multiply(this.producesAmount[index].toString(), this.amount[index].toString())
                     var multiplier = Decimal.pow(this.producesAmount[index].toString(), this.amount[index].toString())
@@ -240,10 +266,12 @@ var upgrades = {
                     } else if (this.produces[index] === 2) {
                         if (this.producesType[index] === "multiplier") game.tempMultiplier = Decimal.multiply("0.3", multiplier.toString()).toString()
                         else if (this.producesType[index] === "sum") game.tempMultiplier = Decimal.sum("0.3", sum.toString()).toString()
+                    } else if (this.produces[index] === 3) {
+                        if (this.producesType[index] === "multiplier") game.maxWorkers *= multiplier
+                        else if (this.producesType[index] === "sum") game.maxWorkers += sum
                     }
-                    if (this.priceIncrementType[index] === "#") {
-                        this.priceIndex[index]++;
-                    }
+                    if (this.priceIncrementType[index] === "#") this.priceIndex[index]++
+                    else if (this.priceIncrementType[index] === "amount") this.price[index] += this.priceIncrement[index];
                     saveGame();
                     location.reload();
                 }
@@ -253,14 +281,22 @@ var upgrades = {
                 if (confirm("Are you sure you want to restart?")) {
                     var kP = game.knowledgePoints;
                     var tKP = game.totalKP;
-                    var price = this.price[index];
-                    var am = this.amount[index];
-                    var priceIndex = this.priceIndex[index];
+                    var am = [0, 0, 0];
+                    var priceIndex = [3, 0, 0];
+                    var price = [10, 4, 3];
+                    for (i = 0; i < this.keepUpgrades[i].length; i++) {
+                        if (this.keepUpgrades[index][i] !== -1) {
+                            am[i] = this.amount[this.keepUpgrades[index][i]];
+                            priceIndex[i] = this.priceIndex[this.keepUpgrades[index][i]];
+                            price[i] = this.price[this.keepUpgrades[index][i]]
+                        } else if (this.keepUpgrades[index][i] == -2) {
+                            am[i] = this.amount[index];
+                            priceIndex[i] = this.priceIndex[index];
+                            price[i] = this.price[index]
+                        }
+                    }
                     newSave(10, 10, 1, kP, tKP, 0.3, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], [10, 3], [3, 0], [0, 0])
                     loadGame();
-                    this.price[index] = price;
-                    this.amount[index] = am;
-                    this.priceIndex[index] = priceIndex;
                     this.amount[index]++;
                     var sum = Decimal.multiply(this.producesAmount[index].toString(), this.amount[index].toString())
                     var multiplier = Decimal.pow(this.producesAmount[index].toString(), this.amount[index].toString())
