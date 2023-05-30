@@ -406,7 +406,7 @@ var display = {
                 var tempElement = document.createElement('div');
                 tempElement.innerHTML = '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+index+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[index]+'</p><p>This costs '+shortInput(new Decimal(productor.price[index]).toString(), 3)+' coins<span id="kp'+index+'"> and '+shortInput((productor.name.length - 5) * (35 + 10 * (productor.name.length - 5)) + 10 + productor.amount[index], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+index+'">'+shortInput(Math.round(productor.amount[index]), 3)+' (x'+shortInput(productorMultiplier.multiplier[index], 2)+')</span></div><div class="untilten"><p><span id="a'+index+'">'+productor.until10[index]+' until 10</span></div></td></tr></table>';
 
-                shopContainer.replaceChild(tempElement.firstChild, shopContainer.children[1]);
+                shopContainer.replaceChild(tempElement.firstChild, shopContainer.children[index]);
                 }
         updateValues()
         }
