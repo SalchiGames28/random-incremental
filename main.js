@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.12',
+    version: '0.0.13',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -367,7 +367,7 @@ var display = {
             document.getElementById("tempmultiplier").innerHTML = shortInput(Decimal.floor(game.tempMultiplier * 100) / 100, 2);
     },
     updateShop: function(index) {
-        if (index == "undefined") {
+        if (index == -1) {
         buyables = [];
         document.getElementById("shopContainer").innerHTML = "";
         for (i = 0; i < productor.name.length; i++) {
@@ -638,7 +638,7 @@ function onLoad() {
     nextAU = [];
     loadGame();
     if (pages.page == "index") {
-        display.updateShop();
+        display.updateShop(-1);
         display.updateUpgrades()
     };
     display.updatePageButtons()
@@ -713,7 +713,7 @@ setInterval(function() {
             } else nextBuyables.push(1)
         } else nextBuyables.push(0)
     };
-    if (pages.page == "index") if (buyables.toString() !== nextBuyables.toString()) display.updateShop();//para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
+    if (pages.page == "index") if (buyables.toString() !== nextBuyables.toString()) display.updateShop(-1);//para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
         if (upgrades.priceType[i] === "productor") {
             if (productor.name.length > upgrades.priceIndex[i]) {
