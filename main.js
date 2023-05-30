@@ -396,21 +396,21 @@ var display = {
                 document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs '+shortInput(new Decimal(productor.price[i]).toString(), 3)+' coins<span id="kp'+i+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
             }
             else {
-                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs <span>'+shortInput(productor.price[i], 3)+' coins<span id="kp'+i+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 3)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
+                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs <span>'+shortInput(new Decimal(productor.kp[i]).toString(), 3)+' coins<span id="kp'+i+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 3)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
             }
         }
         } else if (index >= 0) {
             if (buyables[index] == 1) {
                 var shopContainer = document.getElementById("shopContainer");
                 var tempElement = document.createElement('div');
-                tempElement.innerHTML = '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+index+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[index]+'</p><p>This costs '+shortInput(new Decimal(productor.price[index]).toString(), 3)+' coins<span id="kp'+index+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+index+'">'+shortInput(Math.round(productor.amount[index]), 3)+' (x'+shortInput(productorMultiplier.multiplier[index], 2)+')</span></div><div class="untilten"><p><span id="a'+index+'">'+productor.until10[index]+' until 10</span></div></td></tr></table>';
+                tempElement.innerHTML = '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+index+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[index]+'</p><p>This costs '+shortInput(new Decimal(productor.price[index]).toString(), 3)+' coins<span id="kp'+index+'"> and '+shortInput(new Decimal(productor.kp[i]).toString(), 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+index+'">'+shortInput(Math.round(productor.amount[index]), 3)+' (x'+shortInput(productorMultiplier.multiplier[index], 2)+')</span></div><div class="untilten"><p><span id="a'+index+'">'+productor.until10[index]+' until 10</span></div></td></tr></table>';
 
                 shopContainer.replaceChild(tempElement.firstChild, shopContainer.children[index]);
                 }
             else {
                 var shopContainer = document.getElementById("shopContainer");
                 var tempElement = document.createElement('div');
-                tempElement.innerHTML = '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+index+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[index]+'</p><p>This costs '+shortInput(new Decimal(productor.price[index]).toString(), 3)+' coins<span id="kp'+index+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+index+'">'+shortInput(Math.round(productor.amount[index]), 3)+' (x'+shortInput(productorMultiplier.multiplier[index], 2)+')</span></div><div class="untilten"><p><span id="a'+index+'">'+productor.until10[index]+' until 10</span></div></td></tr></table>';
+                tempElement.innerHTML = '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+index+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[index]+'</p><p>This costs '+shortInput(new Decimal(productor.price[index]).toString(), 3)+' coins<span id="kp'+index+'"> and '+shortInput(new Decimal(productor.kp[i]).toString(), 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+index+'">'+shortInput(Math.round(productor.amount[index]), 3)+' (x'+shortInput(productorMultiplier.multiplier[index], 2)+')</span></div><div class="untilten"><p><span id="a'+index+'">'+productor.until10[index]+' until 10</span></div></td></tr></table>';
 
                 shopContainer.replaceChild(tempElement.firstChild, shopContainer.children[index]);
                 }
@@ -611,7 +611,7 @@ function loadGame () {
 };
 
 function shortInput(input, maxPrecision) {
-    var log = Decimal.log10(input.toString())
+    var log = Decimal.log10(input)
     if (log >= 5.9) {
         const exponent = Math.floor(log);
         const rounded = new Decimal(new Decimal(input.toString()).dividedBy(Decimal.pow(10, exponent))).toFixed(maxPrecision)
