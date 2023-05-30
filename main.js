@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1741',
+    version: '0.0.1742',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -421,8 +421,8 @@ var display = {
                 if (availableUpgrades[i] == 2) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
                 else if (availableUpgrades[i] == 1) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upnotbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
             } else if (upgrades.priceType[i] == "upgrade") {
-                if (availableUpgrades[i] == 2) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
-                else document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upnotbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
+                if (availableUpgrades[i] == 2) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+upgrades.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
+                else if (availableUpgrades[i] == 1) document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upnotbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+productor.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
             }
         }
         updateValues()
