@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1772',
+    version: '0.0.1773',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -237,7 +237,7 @@ var upgrades = {
                     var price = [10, 4, 3];
                     var tempMultiplierIncrease = game.tempMultiplierIncrease;
                     for (i = 0; i < this.keepUpgrades[index].length; i++) {
-                        if (this.keepUpgrades[index][i] !== -1) {
+                        if (this.keepUpgrades[index][i] > -1) {
                             am[i] = this.amount[this.keepUpgrades[index][i]];
                             priceIndex[i] = this.priceIndex[this.keepUpgrades[index][i]];
                             price[i] = this.price[this.keepUpgrades[index][i]]
@@ -285,7 +285,7 @@ var upgrades = {
                     var priceIndex = [3, 0, 0];
                     var price = [10, 4, 3];
                     for (i = 0; i < this.keepUpgrades[index].length; i++) {
-                        if (this.keepUpgrades[index][i] !== -1) {
+                        if (this.keepUpgrades[index][i] > -1) {
                             am[i] = this.amount[this.keepUpgrades[index][i]];
                             priceIndex[i] = this.priceIndex[this.keepUpgrades[index][i]];
                             price[i] = this.price[this.keepUpgrades[index][i]]
