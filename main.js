@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.141',
+    version: '0.0.142',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -369,7 +369,6 @@ var display = {
     updateShop: function(index) {
         if (index == "all") {
         buyables = [];
-        document.getElementById("shopContainer").innerHTML = "";
         for (i = 0; i < productor.name.length; i++) {
             if (new Decimal(game.money).gte(productor.price[i])) {
                 if (productor.produces[i] == -2) {
@@ -378,23 +377,18 @@ var display = {
                     } else buyables.push(0)
                 } else buyables.push(1)
             } else buyables.push(0);
-            if (buyables[buyables.length - 1] == 1) {
+        }
+        document.getElementById("shopContainer").innerHTML = "";
+        for (i = 0; i < productor.name.length; i++) {
+            if (buyables[i] == 1) {
                 document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs '+shortInput(new Decimal(productor.price[i]).toString(), 3)+' coins<span id="kp'+i+'"> and '+shortInput((productor.name.length - 5) * (35 + 10 * (productor.name.length - 5)) + 10 + productor.amount[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
             }
             else {
                 document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs <span>'+shortInput(productor.price[i], 3)+' coins<span id="kp'+i+'"> and '+(productor.name.length - 5) * (35 + 10 * (productor.name.length - 5)) + 10 + productor.amount[i]+' knowledge points</span></span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 3)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
             }
         }
-        updateValues()
         } else if (index >= 0) {
-            if (new Decimal(game.money).gte(productor.price[index])) {
-                if (productor.produces[index] == -2) {
-                    if (new Decimal(game.knowledgePoints).gte(new Decimal(productor.name.length - 5).times(new Decimal(35 + 10 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString())) {
-                        buyables[index] = 1
-                    } else buyables[index] = 0
-                } else buyables[index] = 1
-            } else buyables[index] = 0
-            if (buyables[buyables.length - 1] == 1) {
+            if (buyables[index] == 1) {
                 var shopContainer = document.getElementById("shopContainer");
                 var tempElement = document.createElement('div');
                 tempElement.innerHTML = '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+index+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[index]+'</p><p>This costs '+shortInput(new Decimal(productor.price[index]).toString(), 3)+' coins<span id="kp'+index+'"> and '+shortInput((productor.name.length - 5) * (35 + 10 * (productor.name.length - 5)) + 10 + productor.amount[index], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+index+'">'+shortInput(Math.round(productor.amount[index]), 3)+' (x'+shortInput(productorMultiplier.multiplier[index], 2)+')</span></div><div class="untilten"><p><span id="a'+index+'">'+productor.until10[index]+' until 10</span></div></td></tr></table>';
@@ -408,8 +402,8 @@ var display = {
 
                 shopContainer.replaceChild(tempElement.firstChild, shopContainer.children[index]);
                 }
-        updateValues()
         }
+        updateValues()
     },
     updateUpgrades: function() {
         availableUpgrades = [];
@@ -641,7 +635,8 @@ function onLoad() {
         display.updateShop("all");
         display.updateUpgrades()
     };
-    display.updatePageButtons()
+    display.updatePageButtons();
+    document.getElementById("version").innerHTML = 'Version: '+game.version+' by l1mb0'
 };
 
 function changePage(page) {

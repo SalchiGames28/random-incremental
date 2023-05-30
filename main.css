@@ -4,6 +4,12 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.version {
+    text-align: left;
+    margin-top: 100px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .money {
     font-size: 32px
 }
