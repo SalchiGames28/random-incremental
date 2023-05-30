@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.17',
+    version: '0.0.171',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -425,7 +425,7 @@ var display = {
         availableUpgrades = [];
         document.getElementById("upgradeContainer").innerHTML = ""
         for (i = 0; i < upgrades.name.length; i++) {
-            if (upgrades.priceType[i] === "productor") {
+            if (upgrades.priceType[i] == "productor") {
                 if (productor.name.length > (upgrades.priceIndex[i] + 1)) {
                     if (productor.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) {
                         availableUpgrades.push(2);
@@ -437,12 +437,15 @@ var display = {
                     }
                 }
                 else availableUpgrades.push(0);
-                } else if (upgrades.priceType[i] === "upgrade") {
+                } else if (upgrades.priceType[i] == "upgrade") {
                         if (upgrades.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) {
                             availableUpgrades.push(2);
                             document.getElementById("upgradeContainer").innerHTML += '<table class="upgradeButton unselectable upbuyable" onclick="upgrades.purchase('+i+', 1)"><tr><td id="nameCostAndDescription"><p>'+upgrades.name[i]+'</p><p>You need <span>'+shortInput(upgrades.price[i], 3)+' of "'+upgrades.name[upgrades.priceIndex[i]]+'"</span></p><p>'+upgrades.description[i]+'</p></td><td id="amount"><div class="am"><span id="u'+i+'">'+upgrades.amount[i]+'</span></div></td></tr></table>'
                         }
-                        else availableUpgrades.push(0);
+                        else {
+                            availableUpgrades.push(0)
+                            document.getElementById("upgradeContainer").innerHTML += ''
+                        }
                 }
         }
         updateValues()
@@ -712,6 +715,9 @@ setInterval(function() {
 setInterval(function() {
     game.tempMultiplier *= 0.995
     if (game.tempMultiplier < 1) game.tempMultiplier = 1;
+}, 100);
+
+setInterval(function() {
     nextBuyables = [
     ];
     nextAU = [
@@ -719,28 +725,30 @@ setInterval(function() {
     for (i = 0; i < productor.name.length; i++) {
         if (new Decimal(game.money.toString()).gte(productor.price[i].toString())) {
             if (productor.produces[i] == -2) {
-                if (new Decimal(game.knowledgePoints).gte(productor.kp[i])) {
+                if (new Decimal(game.knowledgePoints.toString()).gte(productor.kp[i].toString())) {
                     nextBuyables.push(1)
                 } else nextBuyables.push(0)
             } else nextBuyables.push(1)
         } else nextBuyables.push(0)
         if (buyables[i] !== nextBuyables[i]) display.updateShop(i)
     };
-    if (pages.page == "index") if (buyables.toString() !== nextBuyables.toString()) display.updateShop("all");//para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
+    //para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
-        if (upgrades.priceType[i] === "productor") {
+        if (upgrades.priceType[i] == "productor") {
             if (productor.name.length > upgrades.priceIndex[i]) {
                 if (productor.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) nextAU.push(2)
                 else nextAU.push(1)
             }
             else nextAU.push(0);
-            } else if (upgrades.priceType[i] === "upgrade") {
+            } else if (upgrades.priceType[i] == "upgrade") {
                 if (upgrades.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) nextAU.push(2)
                 else nextAU.push(0)
             }
         }
-    if (pages.page == "index") if (availableUpgrades.toString() !== nextAU.toString()) display.updateUpgrades()
-}, 100);
+    if (pages.page == "index") if (availableUpgrades.toString() !== nextAU.toString()) {
+        display.updateUpgrades()
+    }
+}, 50);
 
 document.addEventListener("keydown", function(event) {
     if (event.ctrlKey && event.which == 83) { //ctrl + s, event.which == 65 es la tecla A
