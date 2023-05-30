@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.14231',
+    version: '0.0.1424',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -708,6 +708,7 @@ setInterval(function() {
                 } else nextBuyables.push(0)
             } else nextBuyables.push(1)
         } else nextBuyables.push(0)
+        if (buyables[i] !== nextBuyables[i]) display.updateShop(i)
     };
     if (pages.page == "index") if (buyables.toString() !== nextBuyables.toString()) display.updateShop("all");//para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
