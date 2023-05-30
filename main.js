@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1775',
+    version: '0.0.1776',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -236,6 +236,8 @@ var upgrades = {
                     var priceIndex = [3, 0, 0];
                     var price = [10, 4, 3];
                     var tempMultiplierIncrease = game.tempMultiplierIncrease;
+                    var maxWorkers = productor.maxWorkers;
+                    if (this.produces[index] === 3) maxWorkers = 5
                     for (i = 0; i < this.keepUpgrades[index].length; i++) {
                         if (this.keepUpgrades[index][i] > -1) {
                             am[i] = this.amount[this.keepUpgrades[index][i]];
@@ -247,7 +249,7 @@ var upgrades = {
                             price[i] = this.price[index]
                         }
                     }
-                    newSave(10, game.totalMoney, 1, kP, tKP, tempMultiplierIncrease, productor.maxWorkers, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, am)
+                    newSave(10, game.totalMoney, 1, kP, tKP, tempMultiplierIncrease, maxWorkers, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, am)
                     loadGame();
                     this.amount[index]++;
                     var sum = Decimal.multiply(this.producesAmount[index].toString(), this.amount[index].toString())
@@ -284,6 +286,8 @@ var upgrades = {
                     var am = [0, 0, 0];
                     var priceIndex = [3, 0, 0];
                     var price = [10, 4, 3];
+                    var maxWorkers = productor.maxWorkers;
+                    if (this.produces[index] === 3) maxWorkers = 5
                     for (i = 0; i < this.keepUpgrades[index].length; i++) {
                         if (this.keepUpgrades[index][i] > -1) {
                             am[i] = this.amount[this.keepUpgrades[index][i]];
@@ -295,7 +299,7 @@ var upgrades = {
                             price[i] = this.price[index]
                         }
                     }
-                    newSave(10, 10, 1, kP, tKP, 0.3, productor.maxWorkers, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, am)
+                    newSave(10, 10, 1, kP, tKP, 0.3, maxWorkers, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, am)
                     loadGame();
                     this.amount[index]++;
                     var sum = Decimal.multiply(this.producesAmount[index].toString(), this.amount[index].toString())
@@ -313,6 +317,9 @@ var upgrades = {
                     } else if (this.produces[index] === 2) {
                         if (this.producesType[index] === "multiplier") game.tempMultiplierIncrease = Decimal.multiply("0.3", multiplier.toString()).toString()
                         else if (this.producesType[index] === "sum") game.tempMultiplierIncrease = Decimal.add("0.3", sum.toString()).toString()
+                    } else if (this.produces[index] === 3) {
+                        if (this.producesType[index] === "multiplier") productor.maxWorkers *= multiplier
+                        else if (this.producesType[index] === "sum") productor.maxWorkers += sum
                     }
                     if (this.priceIncrementType[index] === "#") this.priceIndex[index]++
                     else if (this.priceIncrementType[index] === "amount") this.price[index] += this.priceIncrement[index];
