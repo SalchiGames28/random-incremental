@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1774',
+    version: '0.0.1775',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -247,7 +247,7 @@ var upgrades = {
                             price[i] = this.price[index]
                         }
                     }
-                    newSave(10, game.totalMoney, 1, kP, tKP, tempMultiplierIncrease, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, amount)
+                    newSave(10, game.totalMoney, 1, kP, tKP, tempMultiplierIncrease, productor.maxWorkers, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, am)
                     loadGame();
                     this.amount[index]++;
                     var sum = Decimal.multiply(this.producesAmount[index].toString(), this.amount[index].toString())
@@ -295,7 +295,7 @@ var upgrades = {
                             price[i] = this.price[index]
                         }
                     }
-                    newSave(10, 10, 1, kP, tKP, 0.3, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, amount)
+                    newSave(10, 10, 1, kP, tKP, 0.3, productor.maxWorkers, ["Workers", "Hard workers", "Harder workers", "Very hard workers", "Create a worker"], [10, 100, 10000, 1000000, 1000000000], [100, 1000, 10000, 100000, 1000000], [0, 0, 0, 0, 0], [0, -1, -1, -1, -2], [10, 10, 10, 10, 10], [1, 1, 1, 1, 1], [2, 2, 2, 2, 1], price, priceIndex, am)
                     loadGame();
                     this.amount[index]++;
                     var sum = Decimal.multiply(this.producesAmount[index].toString(), this.amount[index].toString())
@@ -479,7 +479,7 @@ var display = {
     }
 }
 
-function newSave(money, totalMoney, tempMultiplier, knowledgePoints, totalKP, tempMultiplierIncrease,productorName, productorPrice, productorPriceMultiplier, productorAmount, productorProduces, productorUntil10, productorMultiplier, productorMultiplierIncrement, upgradesPrice, upgradesPriceIndex, upgradesAmount ) {
+function newSave(money, totalMoney, tempMultiplier, knowledgePoints, totalKP, tempMultiplierIncrease, maxWorkers, productorName, productorPrice, productorPriceMultiplier, productorAmount, productorProduces, productorUntil10, productorMultiplier, productorMultiplierIncrement, upgradesPrice, upgradesPriceIndex, upgradesAmount ) {
     gameSave = {
         money: money,
         totalMoney: totalMoney,
@@ -487,6 +487,7 @@ function newSave(money, totalMoney, tempMultiplier, knowledgePoints, totalKP, te
         knowledgePoints: knowledgePoints,
         totalKP: totalKP,
         tempMultiplierIncrease: tempMultiplierIncrease,
+        maxWorkers: maxWorkers,
         productorName: productorName,
         productorPrice: productorPrice,
         productorPriceMultiplier: productorPriceMultiplier,
@@ -514,6 +515,7 @@ function saveGame() {
         knowledgePoints: game.knowledgePoints,
         totalKP: game.totalKP,
         tempMultiplierIncrease: game.tempMultiplierIncrease,
+        maxWorkers: productor.maxWorkers,
         productorName: productor.name,
         productorPrice: productor.price,
         productorPriceMultiplier: productor.priceMultiplier,
@@ -541,6 +543,7 @@ function loadGame () {
         if (typeof savedGame.knowledgePoints !== "undefined") game.knowledgePoints = savedGame.knowledgePoints;
         if (typeof savedGame.totalKP !== "undefined") game.totalKP = savedGame.totalKP;
         if (typeof savedGame.tempMultiplierIncrease !== "undefined") game.tempMultiplierIncrease = savedGame.tempMultiplierIncrease;
+        if (typeof savedGame.maxWorkers !== "undefined") productor.maxWorkers = savedGame.maxWorkers;
         if (typeof savedGame.productorName !== "undefined") {
             productor.name = []
             for (i = 0; i < savedGame.productorName.length; i += 1) {
