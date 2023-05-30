@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1773',
+    version: '0.0.1774',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -716,7 +716,7 @@ function updateValues() {
             productor.amount[i] = new Decimal(productor.amount[i]).plus(new Decimal(productor.getProductionPerSecond(i)).times('0.01'));
             document.getElementById(i).innerHTML = shortInput(Decimal.floor(productor.amount[i]).toString(), 2) + ' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')';
             if (i === productor.name.length - 1) {
-                if (productor.name.length < 15) document.getElementById('kp' + i).innerHTML = ' and ' + shortInput(productor.kp[i], 3) + ' knowledge points'
+                if (productor.name.length < productor.maxWorkers + 5) document.getElementById('kp' + i).innerHTML = ' and ' + shortInput(productor.kp[i], 3) + ' knowledge points'
                 else document.getElementById('cost' + i).innerHTML = '<p>10/10 workers created</p>'
             } else document.getElementById('kp' + i).innerHTML = ''
         }
@@ -740,7 +740,7 @@ setInterval(function() {
     for (i = 0; i < productor.name.length; i++) {
         if (new Decimal(game.money.toString()).gte(productor.price[i].toString())) {
             if (productor.produces[i] == -2) {
-                if (new Decimal(game.knowledgePoints.toString()).gte(productor.kp[i].toString()) && productor.name.length < 15) {
+                if (new Decimal(game.knowledgePoints.toString()).gte(productor.kp[i].toString()) && productor.name.length < productor.maxWorkers + 5) {
                     nextBuyables.push(1)
                 } else nextBuyables.push(0)
             } else nextBuyables.push(1)
