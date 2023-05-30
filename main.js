@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.171',
+    version: '0.0.172',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -383,27 +383,34 @@ var display = {
             document.getElementById("tempmultiplier").innerHTML = shortInput(Decimal.floor(game.tempMultiplier * 100) / 100, 2);
     },
     updateShop: function(index) {
-        buyables = [];
-        for (i = 0; i < productor.name.length; i++) {
-            if (new Decimal(game.money).gte(productor.price[i])) {
-                if (productor.produces[i] == -2) {
-                    if (new Decimal(game.knowledgePoints).gte(productor.kp[i])) {
-                        buyables.push(1)
-                    } else buyables.push(0)
-                } else buyables.push(1)
-            } else buyables.push(0);
-        }
         if (index == "all") {
-        document.getElementById("shopContainer").innerHTML = "";
-        for (i = 0; i < productor.name.length; i++) {
-            if (buyables[i] == 1) {
-                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs '+shortInput(productor.price[i], 2)+' coins<span id="kp'+i+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
+            buyables = [];
+                for (i = 0; i < productor.name.length; i++) {
+                    if (new Decimal(game.money).gte(productor.price[i])) {
+                        if (productor.produces[i] == -2) {
+                            if (new Decimal(game.knowledgePoints).gte(productor.kp[i])) {
+                                buyables.push(1)
+                            } else buyables.push(0)
+                        } else buyables.push(1)
+                    } else buyables.push(0);
+                }
+            document.getElementById("shopContainer").innerHTML = "";
+            for (i = 0; i < productor.name.length; i++) {
+                if (buyables[i] == 1) {
+                    document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs '+shortInput(productor.price[i], 2)+' coins<span id="kp'+i+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
+                }
+                else {
+                    document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs <span>'+shortInput(productor.price[i], 2)+' coins<span id="kp'+i+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 3)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
+                }
             }
-            else {
-                document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable sbnotbuyable" onclick="productor.purchase('+i+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[i]+'</p><p>This costs <span>'+shortInput(productor.price[i], 2)+' coins<span id="kp'+i+'"> and '+shortInput(productor.kp[i], 3)+' knowledge points</span></span></p></td><td id="amount"><div class="am"><span id="'+i+'">'+shortInput(Math.round(productor.amount[i]), 3)+' (x'+shortInput(productorMultiplier.multiplier[i], 3)+')</span></div><div class="untilten"><p><span id="a'+i+'">'+productor.until10[i]+' until 10</span></div></td></tr></table>';
-            }
-        }
         } else if (index >= 0) {
+            if (new Decimal(game.money).gte(productor.price[index])) {
+                if (productor.produces[index] == -2) {
+                    if (new Decimal(game.knowledgePoints).gte(productor.kp[index])) {
+                        buyables[index] = 1
+                    } else buyables[index] = 0
+                } else buyables[index] = 1
+            } else buyables[index] = 0
             if (buyables[index] == 1) {
                 var shopContainer = document.getElementById("shopContainer");
                 var tempElement = document.createElement('div');
@@ -730,8 +737,10 @@ setInterval(function() {
                 } else nextBuyables.push(0)
             } else nextBuyables.push(1)
         } else nextBuyables.push(0)
-        if (buyables[i] !== nextBuyables[i]) display.updateShop(i)
-    };
+
+    } for (i = 0; i < productor.name.length; i++) {
+        if (nextBuyables[i] !== buyables[i]) display.updateShop(i)        
+    }
     //para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
         if (upgrades.priceType[i] == "productor") {
