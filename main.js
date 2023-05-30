@@ -70,6 +70,10 @@ var productor = {
         10
     ],
 
+    calculateKP: function(index) {
+        return(new Decimal(new Decimal(this.name.length - 5).times(new Decimal(20 + 10 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index]))).toString())
+    },
+
     purchase: function(index, times) {
         for (let t = 0; t < times; t++) {
             if (new Decimal(this.kp[index]).gt(new Decimal(game.knowledgePoints)) && this.produces[index] == -2) {
@@ -81,7 +85,7 @@ var productor = {
                         game.addMoney(new Decimal(this.price[index]).times('-1').toString());
                         this.amount[index] = new Decimal(this.amount[index]).plus('1').toString();
                         game.tempMultiplier += game.tempMultiplierIncrease / Math.pow(game.tempMultiplier, 1.5);
-                        this.kp[index] = new Decimal(new Decimal(this.name.length - 5).times(new Decimal(20 + 10 * (this.name.length - 5))).plus(new Decimal('10').plus(this.amount[index]))).toString();
+                        this.kp[index] = this.calculateKP(index)
                         if (this.until10[index] <= 0) {
                             game.knowledgePoints += 1;
                             game.totalKP += 1;
@@ -692,6 +696,7 @@ function updateValues() {
     document.title = shortInput(Decimal.floor(game.money), 2) + " coins - Random Incremental";
     if (pages.page == "index") {
         for (i = 0; i < productor.name.length; i++) {
+            productor.kp[i] = productor.calculateKP(i);
             productor.amount[i] = new Decimal(productor.amount[i]).plus(new Decimal(productor.getProductionPerSecond(i)).times('0.01'));
             document.getElementById(i).innerHTML = shortInput(Decimal.floor(productor.amount[i]).toString(), 2) + ' (x'+shortInput(productorMultiplier.multiplier[i], 2)+')';
             if (i === productor.name.length - 1) document.getElementById('kp' + i).innerHTML = ' and ' + shortInput(productor.kp[i], 3) + ' knowledge points'
