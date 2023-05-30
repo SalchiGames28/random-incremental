@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.176',
+    version: '0.0.1762',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -714,7 +714,7 @@ setInterval(function() {
     //para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
         if (upgrades.priceType[i] == "productor") {
-                if (productor.name.length + 1 > upgrades.priceIndex[i]) {
+                if (productor.name.length - 1 > upgrades.priceIndex[i]) {
                     if (productor.amount[upgrades.priceIndex[i]] >= upgrades.price[i]) nextAU.push(2)
                     else nextAU.push(1)
                 } else nextAU.push(0)
