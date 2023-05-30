@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.1421',
+    version: '0.0.1422',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -367,7 +367,6 @@ var display = {
             document.getElementById("tempmultiplier").innerHTML = shortInput(Decimal.floor(game.tempMultiplier * 100) / 100, 2);
     },
     updateShop: function(index) {
-        if (index == "all") {
         buyables = [];
         for (i = 0; i < productor.name.length; i++) {
             if (new Decimal(game.money).gte(productor.price[i])) {
@@ -378,6 +377,7 @@ var display = {
                 } else buyables.push(1)
             } else buyables.push(0);
         }
+        if (index == "all") {
         document.getElementById("shopContainer").innerHTML = "";
         for (i = 0; i < productor.name.length; i++) {
             if (buyables[i] == 1) {
@@ -393,7 +393,7 @@ var display = {
                 var tempElement = document.createElement('div');
                 tempElement.innerHTML = '<table class="shopButton unselectable sbbuyable" onclick="productor.purchase('+index+', 10)"><tr><td id="nameAndCost"><p>'+productor.name[index]+'</p><p>This costs '+shortInput(new Decimal(productor.price[index]).toString(), 3)+' coins<span id="kp'+index+'"> and '+shortInput((productor.name.length - 5) * (35 + 10 * (productor.name.length - 5)) + 10 + productor.amount[index], 3)+' knowledge points</span></p></td><td id="amount"><div class="am"><span id="'+index+'">'+shortInput(Math.round(productor.amount[index]), 3)+' (x'+shortInput(productorMultiplier.multiplier[index], 2)+')</span></div><div class="untilten"><p><span id="a'+index+'">'+productor.until10[index]+' until 10</span></div></td></tr></table>';
 
-                shopContainer.replaceChild(tempElement.firstChild, shopContainer.children[1]);
+                shopContainer.replaceChild(tempElement.firstChild, shopContainer.children[index]);
                 }
             else {
                 var shopContainer = document.getElementById("shopContainer");
