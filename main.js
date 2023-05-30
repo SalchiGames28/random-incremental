@@ -86,7 +86,7 @@ var productor = {
                                 this.createNewProductor('New worker #' + (this.name.length - 4), new Decimal(this.price[index].toString()).dividedBy(new Decimal(this.priceMultiplier[index].toString()).dividedBy('10')).toString(), new Decimal(this.priceMultiplier[index].toString()).times('100').toString(), -1, Decimal.pow('2', upgrades.amount[0].toString()).toString(), 2, this.price[index].toString())    
                             }
                         };
-                        display.updateShop(index);
+                        display.updateShop(-1);
                         if (t == times - 1) return(1)
                         } else return(0)
                     }
@@ -386,7 +386,7 @@ var display = {
             }
         }
         updateValues()
-        } else {
+        } else if (index >= 0) {
             if (new Decimal(game.money).gte(productor.price[index])) {
                 if (productor.produces[index] == -2) {
                     if (new Decimal(game.knowledgePoints).gte(new Decimal(productor.name.length - 5).times(new Decimal(35 + 10 * (productor.name.length - 5))).plus(new Decimal('10').plus(productor.amount[i])).toString())) {
