@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.13',
+    version: '0.0.14',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -86,7 +86,7 @@ var productor = {
                                 this.createNewProductor('New worker #' + (this.name.length - 4), new Decimal(this.price[index].toString()).dividedBy(new Decimal(this.priceMultiplier[index].toString()).dividedBy('10')).toString(), new Decimal(this.priceMultiplier[index].toString()).times('100').toString(), -1, Decimal.pow('2', upgrades.amount[0].toString()).toString(), 2, this.price[index].toString())    
                             }
                         };
-                        display.updateShop(-1);
+                        display.updateShop(index);
                         if (t == times - 1) return(1)
                         } else return(0)
                     }
@@ -367,7 +367,7 @@ var display = {
             document.getElementById("tempmultiplier").innerHTML = shortInput(Decimal.floor(game.tempMultiplier * 100) / 100, 2);
     },
     updateShop: function(index) {
-        if (index == -1) {
+        if (index == "all") {
         buyables = [];
         document.getElementById("shopContainer").innerHTML = "";
         for (i = 0; i < productor.name.length; i++) {
@@ -638,7 +638,7 @@ function onLoad() {
     nextAU = [];
     loadGame();
     if (pages.page == "index") {
-        display.updateShop(-1);
+        display.updateShop("all");
         display.updateUpgrades()
     };
     display.updatePageButtons()
@@ -713,7 +713,7 @@ setInterval(function() {
             } else nextBuyables.push(1)
         } else nextBuyables.push(0)
     };
-    if (pages.page == "index") if (buyables.toString() !== nextBuyables.toString()) display.updateShop(-1);//para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
+    if (pages.page == "index") if (buyables.toString() !== nextBuyables.toString()) display.updateShop("all");//para comparar arrays, lo mejor es convertirlos a strings usando la funcion "array".toString()
     for (i = 0; i < upgrades.name.length; i++) {
         if (upgrades.priceType[i] === "productor") {
             if (productor.name.length > upgrades.priceIndex[i]) {
