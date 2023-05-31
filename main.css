@@ -136,7 +136,6 @@
 
 .autobuyerButton {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: #dcdcdc;
     transition: all .2s ease-in-out;
     border-radius: 10px;
     width: calc(33% - 10px);
@@ -144,11 +143,16 @@
 }
 .buyAutobuyer {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: #dcdcdc;
     transition: all .2s ease-in-out;
     border-radius: 7.5px;
-    width: 50%;
+    width: 65%;
     margin: 10px auto;  
+}
+.on {
+   background-color: #dcdcdc; 
+}
+.off {
+    background-color: #ababab;
 }
 .toggle1 {
     border: 1px solid #00ff0dbb;
