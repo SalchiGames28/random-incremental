@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.179-132',
+    version: '0.0.179-133',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
