@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.179-133',
+    version: '0.0.179-14',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -495,8 +495,8 @@ var display = {
     updateAutobuyers: function() {
         document.getElementById("autobuyerButtonContainer").innerHTML = ""
         for (i = 0; i < autobuyers.speed.length; i++) {
-            if (autobuyers.toggle[i]) document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable on" onclick="autobuyers.toggle[i] = 1 - autobuyers.toggle[i]; display.updateAutobuyers()"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="buy"><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p onclick="autobuyers.purchase['+i+']">Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
-            else document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable off" onclick="autobuyers.toggle[i] = 1 - autobuyers.toggle[i]; display.updateAutobuyers()"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="buy"><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p onclick="autobuyers.purchase['+i+']">Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
+            if (autobuyers.toggle[i]) document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable on" onclick="autobuyers.toggle['+i+'] = 1 - autobuyers.toggle['+i+']; display.updateAutobuyers()"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="buy"><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p onclick="autobuyers.purchase['+i+']">Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
+            else document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable off" onclick="autobuyers.toggle['+i+'] = 1 - autobuyers.toggle['+i+']; display.updateAutobuyers()"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="buy"><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p onclick="autobuyers.purchase['+i+']">Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
         }
     }
 }
