@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.178',
+    version: '0.0.179-1',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -332,6 +332,13 @@ var upgrades = {
 };
 
 var autobuyers = {
+    name: [
+        "Worker autobuyer",
+        "Hard worker autobuyer",
+        "Harder worker autobuyer",
+        "Very hard worker autobuyer",
+        "Automatically create new workers"
+    ],
     price: [
         1e20,
         1e25,
@@ -373,6 +380,13 @@ var autobuyers = {
         0,
         0,
         0
+    ],
+    toggle: [
+        1,
+        1,
+        1,
+        1,
+        1
     ],
 
     purchase: function(index) {
@@ -481,7 +495,8 @@ var display = {
     updateAutobuyers: function() {
         document.getElementById("autobuyerButtonContainer").innerHTML = ""
         for (i = 0; i < autobuyers.speed.length; i++) {
-            document.getElementById("autobuyerButtonContainer").innerHTML += ''
+            if (autobuyers.toggle[i]) document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable on" onclick="autobuyers.purchase('+i+')"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="buy"><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p>Buy: '+autobuyers.price[i]+'</p></span></div></td></tr></table>'
+            else document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable off" onclick="autobuyers.purchase('+i+')"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="buy"><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p>Buy: '+autobuyers.price[i]+'</p></span></div></td></tr></table>'
         }
     }
 }
@@ -676,7 +691,9 @@ function onLoad() {
     if (pages.page == "index") {
         display.updateShop("all");
         display.updateUpgrades()
-    };
+    } else if (pages.page == "autobuyers") {
+        display.updateAutobuyers()
+    }
     display.updatePageButtons();
     document.getElementById("versionContainer").innerHTML = game.version
 };

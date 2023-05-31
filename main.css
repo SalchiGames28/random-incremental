@@ -47,6 +47,12 @@
     justify-content: center;
 }
 
+#autobuyerButtonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .shopButton {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #dcdcdc;
@@ -126,6 +132,42 @@
     color: #595959;
     width: 25%;
     margin: 10px 0px 10px 10px;
+}
+
+.autobuyerButton {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #dcdcdc;
+    transition: all .2s ease-in-out;
+    border-radius: 10px;
+    width: calc(30% - 10px);
+    margin: 10px auto;  
+}
+.buyAutobuyer {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #dcdcdc;
+    transition: all .2s ease-in-out;
+    border-radius: 7.5px;
+    width: 35%;
+    margin: 10px auto;  
+}
+.toggle1 {
+    border: 1px solid #00ff0dbb;
+}
+.toggle1:hover {
+    background-color: #94cd74;
+}
+.toggle0 {
+    border: 1px solid #ff0000bb;
+    background-color: #adadad;
+}
+
+.autobuyerButton #nameSpeedAndBulk p {
+    margin: 2.5px;
+    width: 75%;
+    margin-left: 20px
+}
+.autobuyerButton #nameSpeedAndBulk p:first-of-type {
+    font-size: 24px;
 }
 
 .unselectable {
