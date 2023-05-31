@@ -139,7 +139,7 @@
     background-color: #dcdcdc;
     transition: all .2s ease-in-out;
     border-radius: 10px;
-    width: calc(30% - 10px);
+    width: calc(33% - 10px);
     margin: 10px auto;  
 }
 .buyAutobuyer {
@@ -147,7 +147,7 @@
     background-color: #dcdcdc;
     transition: all .2s ease-in-out;
     border-radius: 7.5px;
-    width: 35%;
+    width: 50%;
     margin: 10px auto;  
 }
 .toggle1 {
@@ -163,7 +163,7 @@
 
 .autobuyerButton #nameSpeedAndBulk p {
     margin: 2.5px;
-    width: 75%;
+    width: 65%;
     margin-left: 20px
 }
 .autobuyerButton #nameSpeedAndBulk p:first-of-type {
