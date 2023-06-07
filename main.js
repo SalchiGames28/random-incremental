@@ -5,7 +5,7 @@ var game = {
     knowledgePoints: 0,
     totalKP: 0,
     tempMultiplierIncrease: 0.3,
-    version: '0.0.179-142',
+    version: '0.0.179-143',
     
     addMoney: function(amount) {
         this.money = Decimal.plus(this.money.toString(), amount.toString()).toString();
@@ -495,8 +495,8 @@ var display = {
     updateAutobuyers: function() {
         document.getElementById("autobuyerButtonContainer").innerHTML = ""
         for (i = 0; i < autobuyers.speed.length; i++) {
-            if (autobuyers.toggle[i]) document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable on"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="toggleAndBuy"><div class="toggleAutobuyer ta'+i+'"><span id="toggleautobuyer'+i+'"><p onclick="autobuyers.toggle['+i+'] = 1 - autobuyers.toggle['+i+']; display.updateAutobuyers()">Toggle</p></span></div><br><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p onclick="autobuyers.purchase['+i+']">Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
-            else document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable off"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="toggleAndBuy"><div class="toggleAutobuyer ta'+i+'"><span id="toggleautobuyer'+i+'"><p onclick="autobuyers.toggle['+i+'] = 1 - autobuyers.toggle['+i+']; display.updateAutobuyers()">Toggle</p></span></div><br><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'"><span id="buyautobuyer'+i+'"><p onclick="autobuyers.purchase['+i+']">Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
+            if (autobuyers.toggle[i]) document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable on"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="toggleAndBuy"><div class="toggleAutobuyer ta'+i+'" onclick="autobuyers.toggle['+i+'] = 1 - autobuyers.toggle['+i+']; display.updateAutobuyers()"><span id="toggleautobuyer'+i+'"><p>Toggle</p></span></div><br><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'" onclick="autobuyers.purchase['+i+']"><span id="buyautobuyer'+i+'"><p>Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
+            else document.getElementById("autobuyerButtonContainer").innerHTML += '<table class="autobuyerButton unselectable off"><tr><td id="nameSpeedAndBulk"><p>'+autobuyers.name[i]+'</p><p>Speed: '+autobuyers.speed[i] / 1000+'s</p><p>"Bulk buy: '+autobuyers.bulkBuy[i]+'"</p></td><td id="toggleAndBuy"><div class="toggleAutobuyer ta'+i+'" onclick="autobuyers.toggle['+i+'] = 1 - autobuyers.toggle['+i+']; display.updateAutobuyers()"><span id="toggleautobuyer'+i+'"><p>Toggle</p></span></div><br><div class="buyAutobuyer toggle'+new Decimal(game.money.toString()).gte(autobuyers.price[i]) * 1+'" onclick="autobuyers.purchase['+i+']"><span id="buyautobuyer'+i+'"><p>Buy: '+shortInput(autobuyers.price[i].toString(), 2)+'</p></span></div></td></tr></table>'
         }
     }
 }
@@ -767,7 +767,7 @@ setInterval(function() {
     for (i = 0; i < productor.name.length; i++) {
         if (new Decimal(game.money.toString()).gte(productor.price[i].toString())) {
             if (productor.produces[i] == -2) {
-                if (new Decimal(game.knowledgePoints.toString()).gte(productor.kp[i].toString()) && productor.name.length < productor.maxWorkers + 5) {
+                if (new Decimal(game.knowledgePoints.toString()).gte(new Decimal(productor.kp[i]).toString()) && productor.name.length < productor.maxWorkers + 5) {
                     nextBuyables.push(1)
                 } else nextBuyables.push(0)
             } else nextBuyables.push(1)
