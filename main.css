@@ -141,9 +141,18 @@
     width: calc(33% - 10px);
     margin: 10px auto;  
 }
+.autobuyerButton #toggleAndBuy p {
+    width: 60%;
+    margin-right: 20px; 
+}
 .buyAutobuyer {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    transition: all .2s ease-in-out;
+    border-radius: 7.5px;
+    width: 100%;
+    margin: 10px auto;  
+    padding-left: 10px;
+    text-align: center;
+}
+.toggleAutobuyer {
     border-radius: 7.5px;
     width: 100%;
     margin: 10px auto;  
