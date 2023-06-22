@@ -413,7 +413,6 @@ var pages = {
 
     name: [
         "Main",
-        "Autobuyers"
     ],
     description: [
         "Go to the main page",
