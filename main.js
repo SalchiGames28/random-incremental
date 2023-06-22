@@ -412,7 +412,7 @@ var pages = {
     page: "",
 
     name: [
-        "Main",
+        "Main"
     ],
     description: [
         "Go to the main page",
